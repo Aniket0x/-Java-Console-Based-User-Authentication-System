@@ -17,3 +17,14 @@ A Java-based console application that simulates a student registration and cours
 
 ## 📂 Project Structure
 
+project-root/
+├── src/
+│ └── org/example/
+│ ├── App.java
+│ ├── Student.java
+│ ├── EnrollmentService.java
+│ ├── Enrollments.java
+│ └── Course.java
+├── Student.json
+├── Course.json
+└── build.gradle
