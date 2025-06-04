@@ -1,0 +1,20 @@
+[
+  {
+    "course_name" : "CO1",
+    "course_ID" : "31304",
+    "duration" : "12 Weeks",
+    "inspector" : "xyz1"
+  },
+  {
+    "course_name" : "CO2",
+    "course_ID" : "31305",
+    "duration" : "10 Weeks",
+    "inspector" : "xyz2"
+  },
+  {
+    "course_name" : "CO3",
+    "course_ID" : "31303",
+    "duration" : "13 Weeks",
+    "inspector" : "xyz3"
+  }
+]

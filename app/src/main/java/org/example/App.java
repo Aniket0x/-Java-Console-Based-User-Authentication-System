@@ -3,39 +3,114 @@
  */
 package org.example;
 
-import com.google.common.util.concurrent.Service;
-
-import java.sql.SQLOutput;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
+
+
 public class App {
-
-    public static void main(String[] args) {
-
-        System.out.println("*** Welcome ASK Institute Of Coding ***");
-
+    public static void main(String args[]) throws IOException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter User ID : ");
-        String  UserId = sc.nextLine();
+        System.out.println("Welcome to ASK Institute of Technology");
+        System.out.println("Register : 1");
+        System.out.println("Login : 2");
+        System.out.print("Choose Any one option to go next step : ");
 
-        System.out.println("Enter Password : ");
-        String Hashpass = sc.nextLine();
+        int option = sc.nextInt();
+        sc.nextLine();
 
-        User user = UserService.authtication(UserId , Hashpass);
+        if (option == 2) {
 
-        if(user != null){
-            System.out.println("You are Logged Successfully");
+            System.out.print("Enter Email : ");
+            String email = sc.nextLine();
+
+
+            System.out.print("Enter Password : ");
+            String password = sc.nextLine();
+
+
+            Student stud = (Student) EnrollmentService.auth(email, password);
+            if (stud != null) {
+                System.out.println("*** Logged Successfully ***");
+                System.out.println("Name : " + stud.st_name);
+                System.out.println("Student ID : " + Student.st_ID);
+                System.out.println("Email : " + stud.email);
+                System.out.println("Age : " + stud.st_age);
+            } else {
+                System.out.println("Invalid Credential ");
+                System.exit(0);
+            }
+
+        } else if (option == 1) {
+
+
+            Student newstudents = new Student();
+            System.out.print("Enter Name : ");
+            String st_name = sc.nextLine();
+
+            System.out.print("Enter Student ID : ");
+            int st_ID = sc.nextInt();
+
+            System.out.print("Enter Age : ");
+            int st_age = sc.nextInt();
+            sc.nextLine();
+            System.out.print("Enter Email : ");
+            String email = sc.nextLine();
+
+            System.out.print("Enter Password : ");
+            String password = sc.nextLine();
+
+            newstudents.st_name = st_name;
+            newstudents.st_ID = st_ID;
+            newstudents.st_age = st_age;
+            newstudents.email = email;
+            newstudents.password = password;
+
+
+            EnrollmentService.registerService(newstudents);
 
             System.out.println(" ");
-            System.out.println(" *** Your Profile ***");
-            System.out.println("Name : " +user.FullName);
-            System.out.println("User ID : " +user.UserId);
-            System.out.println("Age : " + user.age);
+            System.out.print(" *** WELCOME TO YOUR PROFILE ***");
+            System.out.println(" ");
 
+            System.out.println("*** Logged Successfully ***");
+            System.out.println("Name : " + newstudents.st_name);
+            System.out.println("Student ID : " + newstudents.st_ID);
+            System.out.println("Email : " + newstudents.email);
+            System.out.println("Age : " + newstudents.st_age);
+
+        } else {
+            System.out.println("Error");
         }
-        else {
-            System.out.println("Invalid UserId and Password");
+
+        System.out.println("Do You Wnat Eroll Any Course (Yes/No)  :");
+        String input = sc.nextLine();
+
+        if (input.equalsIgnoreCase("yes")) {
+            List<Course> courses = CourseService.LoadCou();
+            if (courses == null) {
+                System.out.println("No Any Course Available , Sorry!");
+            } else {
+                System.out.println("--- Courses ---");
+                for (Course c : courses) {
+                    System.out.println("1." + c.course_name + "2." + c.course_ID + "3." + c.description);
+                }
+
+                System.out.println("Enter your Cousrse ID to Enroll : ");
+                int SelectedCourseID = sc.nextInt();
+
+                Enrollments enrollment = new Enrollments();
+                enrollment.StudentID =  Student.st_ID;
+                enrollment.course_ID =  SelectedCourseID;
+                enrollment.enrollmentDate =   java.time.LocalDate.now().toString();;
+
+                EnrollmentService.saveEnroll(enrollment);
+
+
+            }
         }
     }
 }
+
